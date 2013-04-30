@@ -11,9 +11,6 @@ Dictionary::Dictionary()
     const char * wavetriangular = "triangular";
     const char * waveRamp = "ramp";
     const char * waveNext = "next";
-    const char * wavevoltage = "voltage";
-    const char * wavefrquency = "frequency";
-    const char * waveduration = "duration";
     const char * waceZero = "zero";
     const char * waveOne = "one";
     const char * waveTwo = "two";

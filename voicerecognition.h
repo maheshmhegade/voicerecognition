@@ -17,9 +17,6 @@ public:
     const char * waveTriangular;
     const char * waveRamp;
     const char * waveNext;
-    const char * waveVoltage;
-    const char * waveFrquency;
-    const char * waveDuration;
     const char * waveZero;
     const char * waveOne;
     const char * waveTwo;
