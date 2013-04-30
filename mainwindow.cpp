@@ -71,17 +71,17 @@ void MainWindow::on_applypushButton_clicked()
         allwaveObject->generateCos(wave);
         break;
     }
-    case 3:
+    case 2:
     {
         allwaveObject->generateTriangular(wave);
         break;
     }
-    case 4:
+    case 3:
     {
         allwaveObject->generateSquare(wave);
         break;
     }
-    case 5:
+    case 4:
     {
         allwaveObject->generateRamp(wave);
         break;

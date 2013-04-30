@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Mar 27 22:51:26 2013
+** Created: Wed May 1 01:08:50 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,7 +39,7 @@ public:
     QVBoxLayout *verticalLayout_4;
     QSplitter *splitter;
     QCustomPlot *widget;
-    QWidget *widget1;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_3;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
@@ -65,7 +65,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(908, 522);
+        MainWindow->resize(908, 553);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_4 = new QVBoxLayout(centralWidget);
@@ -80,9 +80,9 @@ public:
         widget->setMinimumSize(QSize(500, 500));
         widget->setMaximumSize(QSize(900, 900));
         splitter->addWidget(widget);
-        widget1 = new QWidget(splitter);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        verticalLayout_3 = new QVBoxLayout(widget1);
+        layoutWidget = new QWidget(splitter);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -94,12 +94,12 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(widget1);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        durationlineEdit = new QLineEdit(widget1);
+        durationlineEdit = new QLineEdit(layoutWidget);
         durationlineEdit->setObjectName(QString::fromUtf8("durationlineEdit"));
 
         horizontalLayout->addWidget(durationlineEdit);
@@ -110,12 +110,12 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_2 = new QLabel(widget1);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        wavecomboBox = new QComboBox(widget1);
+        wavecomboBox = new QComboBox(layoutWidget);
         wavecomboBox->setObjectName(QString::fromUtf8("wavecomboBox"));
 
         horizontalLayout_2->addWidget(wavecomboBox);
@@ -129,12 +129,12 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        frequencylabel = new QLabel(widget1);
+        frequencylabel = new QLabel(layoutWidget);
         frequencylabel->setObjectName(QString::fromUtf8("frequencylabel"));
 
         horizontalLayout_3->addWidget(frequencylabel);
 
-        frequencylineEdit = new QLineEdit(widget1);
+        frequencylineEdit = new QLineEdit(layoutWidget);
         frequencylineEdit->setObjectName(QString::fromUtf8("frequencylineEdit"));
 
         horizontalLayout_3->addWidget(frequencylineEdit);
@@ -145,12 +145,12 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        voltagelabel = new QLabel(widget1);
+        voltagelabel = new QLabel(layoutWidget);
         voltagelabel->setObjectName(QString::fromUtf8("voltagelabel"));
 
         horizontalLayout_4->addWidget(voltagelabel);
 
-        voltagelineEdit = new QLineEdit(widget1);
+        voltagelineEdit = new QLineEdit(layoutWidget);
         voltagelineEdit->setObjectName(QString::fromUtf8("voltagelineEdit"));
 
         horizontalLayout_4->addWidget(voltagelineEdit);
@@ -158,7 +158,7 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_4);
 
-        applypushButton = new QPushButton(widget1);
+        applypushButton = new QPushButton(layoutWidget);
         applypushButton->setObjectName(QString::fromUtf8("applypushButton"));
 
         verticalLayout->addWidget(applypushButton);
@@ -173,19 +173,14 @@ public:
 
         verticalLayout_3->addItem(verticalSpacer);
 
-        splitter->addWidget(widget1);
+        splitter->addWidget(layoutWidget);
 
         verticalLayout_4->addWidget(splitter);
 
         MainWindow->setCentralWidget(centralWidget);
-        widget->raise();
-        label->raise();
-        durationlineEdit->raise();
-        wavecomboBox->raise();
-        label_2->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 908, 21));
+        menuBar->setGeometry(QRect(0, 0, 908, 20));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -208,7 +203,6 @@ public:
         wavecomboBox->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Sin", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Cos", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "Sinc", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Triangular", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Square", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Ramp", 0, QApplication::UnicodeUTF8)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>908</width>
-    <height>522</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
         </size>
        </property>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -74,11 +74,6 @@
               <item>
                <property name="text">
                 <string>Cos</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Sinc</string>
                </property>
               </item>
               <item>
@@ -159,14 +154,6 @@
      </widget>
     </item>
    </layout>
-   <zorder>widget</zorder>
-   <zorder>label</zorder>
-   <zorder>durationlineEdit</zorder>
-   <zorder>wavecomboBox</zorder>
-   <zorder></zorder>
-   <zorder>label_2</zorder>
-   <zorder></zorder>
-   <zorder>verticalSpacer</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -174,7 +161,7 @@
      <x>0</x>
      <y>0</y>
      <width>908</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
