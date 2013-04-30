@@ -106,7 +106,6 @@ void MainWindow::on_applypushButton_clicked()
     ui->widget->graph(0)->setData(x,y);
     ui->widget->replot();
 
-    allwaveObject->initSoundcard();
     emit wave_plotted();
 }
 

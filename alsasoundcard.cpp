@@ -198,6 +198,7 @@ void  alsaSoundcard::generateSquare(outputWave *wave)
 
 void alsaSoundcard::playBack(outputWave *wave)
 {
+    initSoundcard();
     short int *allSamples = (short int *) malloc(wave->waveDuration*wave->samplingFrequency*sizeof(short int));
     for(int i=0 ;i < wave->waveDuration*wave->samplingFrequency ; i++)
     {
@@ -207,7 +208,7 @@ void alsaSoundcard::playBack(outputWave *wave)
     err = snd_pcm_set_params(playback_handle,SND_PCM_FORMAT_S16,SND_PCM_ACCESS_RW_INTERLEAVED,1,wave->samplingFrequency,1,500000);
     err = snd_pcm_writei(playback_handle,allSamples,wave->waveDuration*wave->samplingFrequency);
     snd_pcm_close(playback_handle);
-
+    delete allSamples;
 }
 
 outputWave::~outputWave()
