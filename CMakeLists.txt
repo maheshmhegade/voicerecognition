@@ -7,11 +7,13 @@ set(pcro_SRS    alsasoundcard.cpp
                 main.cpp
                 mainwindow.cpp
                 qcustomplot.cpp
+                voicerecognition.cpp
                            
                 alsasoundcard.h
                 mainwindow.h
                 qcustomplot.h
                 ui_mainwindow.h
+                voicerecognition.h
                 )
 
 INCLUDE(${QT_USE_FILE})
