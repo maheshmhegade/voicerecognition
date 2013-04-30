@@ -30,7 +30,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "alsasoundcard.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,52 +39,51 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->durationlineEdit->setText((QString)"2");
     ui->frequencylineEdit->setText((QString)"1000");
     ui->voltagelineEdit->setText((QString)"4");
+    wave = new outputWave();
+    allwaveObject = new alsaSoundcard(); //= alsaSoundcard();
+    connect(this,SIGNAL(wave_plotted()),this,SLOT(play_sound()));
+
 }
 
 MainWindow::~MainWindow()
 {
+    delete wave;
+    delete allwaveObject;
     delete ui;
 }
 
 void MainWindow::on_applypushButton_clicked()
 {
 
-    outputWave wave ;
-    alsaSoundcard allwaveObject; //= alsaSoundcard();
-    wave.samplingFrequency = 44100;
-    wave.waveDuration = ui->durationlineEdit->text().toInt();
-    wave.waveFrequency = ui->frequencylineEdit->text().toInt();
-    wave.waveAmplitude = ui->voltagelineEdit->text().toFloat();
+    wave->samplingFrequency = 44100;
+    wave->waveDuration = ui->durationlineEdit->text().toInt();
+    wave->waveFrequency = ui->frequencylineEdit->text().toInt();
+    wave->waveAmplitude = ui->voltagelineEdit->text().toFloat();
     switch (ui->wavecomboBox->currentIndex())
     {
     case 0:
     {
-        allwaveObject.generateSin(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
+        allwaveObject->generateSin(wave);
         break;
     }
     case 1:
     {
-        allwaveObject.generateCos(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
-        break;
-    }
-    case 2:
-    {
-        allwaveObject.generateSinc(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
+        allwaveObject->generateCos(wave);
         break;
     }
     case 3:
     {
-        allwaveObject.generateTriangular(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
+        allwaveObject->generateTriangular(wave);
         break;
     }
     case 4:
     {
-        allwaveObject.generateSquare(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
+        allwaveObject->generateSquare(wave);
         break;
     }
     case 5:
     {
-        allwaveObject.generateRamp(wave.waveFrequency,wave.waveDuration,wave.waveAmplitude,wave.samplingFrequency,&wave.waveSamples);
+        allwaveObject->generateRamp(wave);
         break;
     }
     }
@@ -101,14 +99,18 @@ void MainWindow::on_applypushButton_clicked()
     for (int i=0; i<5000; ++i)
     {
         x[i] = (double)i; // x goes from -1 to 1
-        y[i] = wave.waveSamples[i];//*x[i]; // let's plot a quadratic function
+        y[i] = wave->waveSamples[i];//*x[i]; // let's plot a quadratic function
     }
     // create graph and assign data to it:
     ui->widget->addGraph();
     ui->widget->graph(0)->setData(x,y);
     ui->widget->replot();
-}
-outputWave::~outputWave()
-{
 
+    allwaveObject->initSoundcard();
+    emit wave_plotted();
+}
+
+void MainWindow::play_sound()
+{
+    allwaveObject->playBack(wave);
 }

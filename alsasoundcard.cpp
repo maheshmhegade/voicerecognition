@@ -41,12 +41,11 @@ alsaSoundcard::alsaSoundcard()
 int alsaSoundcard::initSoundcard()
 {
     int err;
-    snd_pcm_t *playback_handle;
-    snd_pcm_hw_params_t *hw_params;
     const char *audio_device;
+    snd_pcm_hw_params_t *hw_params;
     unsigned int rate = 8000;        // adjust to vary sampling rate
     int numChannels = 1;    // adjust for mono or stereo
-    audio_device = "plughw:0,0";
+    audio_device = "default";
 
     if ((err = snd_pcm_open (&playback_handle, audio_device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
         fprintf (stderr, "cannot open audio device %s (%s)\n", audio_device, snd_strerror (err));
@@ -101,139 +100,117 @@ int alsaSoundcard::initSoundcard()
     return 0;
 }
 
-void  alsaSoundcard::generateSin(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
+void  alsaSoundcard::generateSin(outputWave *wave)
 {
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
+    (wave->waveSamples).reserve(wave->waveDuration*wave->samplingFrequency*sizeof(double));
     double angle,increment;
     int x=0;
-    short int *allSamples = (short int *) malloc(duration*samplingfrequency*sizeof(short int));
     angle=0;
-    increment=((2*M_PI*frequency)/samplingfrequency);
-    while (angle<=(2*M_PI*frequency*duration))
+    increment=((2*M_PI*wave->waveFrequency)/wave->samplingFrequency);
+    while (angle<=(2*M_PI*wave->waveFrequency*wave->waveDuration))
     {
-        (*outWave)[x]=(double) ((amplitude * sin(angle))*32768/5);
-        (allSamples)[x] = (short int)(*outWave)[x];
+        (wave->waveSamples)[x]=(double) ((wave->waveAmplitude * sin(angle))*32768/5);
         angle=angle+increment;
         x++;
     }
-    playBack(allSamples,duration,samplingfrequency);
 }
 
-void  alsaSoundcard::generateCos(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
+void  alsaSoundcard::generateCos(outputWave *wave)
 {
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
+    (wave->waveSamples).reserve(wave->waveDuration*wave->samplingFrequency*sizeof(double));
     double angle,increment;
     int x=0;
-    short int *allSamples = (short int *) malloc(duration*samplingfrequency*sizeof(short int));
     angle=0;
-    increment=((2*M_PI*frequency)/samplingfrequency);
-    while (angle<=(2*M_PI*frequency*duration))
+    increment=((2*M_PI*wave->waveFrequency)/wave->samplingFrequency);
+    while (angle<=(2*M_PI*wave->waveFrequency*wave->waveDuration))
     {
-        (*outWave)[x]=(double)((amplitude * cos(angle))*32768/5);
-        (allSamples)[x] = (short int)(*outWave)[x];
+        (wave->waveSamples)[x]=(double) ((wave->waveAmplitude * cos(angle))*32768/5);
         angle=angle+increment;
         x++;
     }
-    playBack(allSamples,duration,samplingfrequency);
 }
 
-void  alsaSoundcard::generateTriangular(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
+void  alsaSoundcard::generateTriangular(outputWave *wave)
 {
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
+    (wave->waveSamples).reserve(wave->waveDuration*wave->samplingFrequency*sizeof(double));
     float step;
-    short int *allSamples = (short int *) malloc(duration*samplingfrequency*sizeof(short int));
     int c = 0, x = 1,size;
-    size = samplingfrequency*duration;
-    step = (float)2*((amplitude*65535*frequency)/(samplingfrequency*5));
-    while(c < (frequency*duration))
+    size = wave->samplingFrequency*wave->waveDuration;
+    step = (float)2*((wave->waveAmplitude*65535*wave->waveFrequency)/(wave->samplingFrequency*5));
+    while(c < (wave->waveFrequency*wave->waveDuration))
     {
 
-        (*outWave)[x-1] = (double)amplitude*(-32767/5);
-        (allSamples)[x] = (short int)(*outWave)[x];
-        for (float i = 0; i < (float)((1/(2*(float)frequency))-(1/(float)samplingfrequency)) ; i += (float)(1/(float)samplingfrequency))
+        (wave->waveSamples)[x-1] = (double)wave->waveAmplitude*(-32767/5);
+        for (float i = 0; i < (float)((1/(2*(float)wave->waveFrequency))-(1/(float)wave->samplingFrequency)) ; i += (float)(1/(float)wave->samplingFrequency))
         {
-            (*outWave)[x] = (*outWave)[x-1] + step;
-            (allSamples)[x] = (short int)(*outWave)[x];
+            (wave->waveSamples)[x] = (wave->waveSamples)[x-1] + step;
             x++;
         }
-        for (float i = 0.0; i < (float)((1/(2*(float)frequency)) - (1/(float)samplingfrequency)); i += (float)(1/(float)samplingfrequency))
+        for (float i = 0.0; i < (float)((1/(2*(float)wave->waveFrequency)) - (1/(float)wave->samplingFrequency)); i += (float)(1/(float)wave->samplingFrequency))
         {
-            (*outWave)[x] = (*outWave)[x-1] - step;
-            (allSamples)[x] = (short int)(*outWave)[x];
+            (wave->waveSamples)[x] = (wave->waveSamples)[x-1] - step;
             x++;
         }
         c++;
     }
-    playBack(allSamples,duration,samplingfrequency);
-
 }
 
-void  alsaSoundcard::generateRamp(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
+void  alsaSoundcard::generateRamp(outputWave * wave )
 {
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
+    (wave->waveSamples).reserve(wave->waveDuration*wave->samplingFrequency*sizeof(double));
     float i,step;
     int c = 0, x = 1;
-    short int *allSamples = (short int *) malloc(duration*samplingfrequency*sizeof(short int));
-    step = (float)((float)amplitude * (65535/5)) *(float)((float)frequency/(float)samplingfrequency);
-    while(c < (frequency * duration))
+    step = (float)((float)wave->waveAmplitude * (65535/5)) *(float)((float)wave->waveFrequency/(float)wave->samplingFrequency);
+    while(c < (wave->waveFrequency * wave->waveDuration))
     {
-        (*outWave)[x-1]=(double)amplitude*(-32767/5);
-        (allSamples)[x] = (short int)(*outWave)[x];
-        for (i = 0 ; i < (float)((1/(float)frequency) - (float)(1/(float)samplingfrequency)); i = i + (float)(1/(float)samplingfrequency))
+        (wave->waveSamples)[x-1]=(double)wave->waveAmplitude*(-32767/5);
+        for (i = 0 ; i < (float)((1/(float)wave->waveFrequency) - (float)(1/(float)wave->samplingFrequency)); i = i + (float)(1/(float)wave->samplingFrequency))
         {
-            (*outWave)[x]=(double)(*outWave)[x-1] + step;
-            (allSamples)[x] = (short int)(*outWave)[x];
+            (wave->waveSamples)[x]=(double)(wave->waveSamples)[x-1] + step;
             x++;
         }
         c++;
     }
-    playBack(allSamples,duration,samplingfrequency);
 }
 
-void  alsaSoundcard::generateSinc(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
+void  alsaSoundcard::generateSquare(outputWave *wave)
 {
-    frequency = duration = amplitude = samplingfrequency = 0;
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
-}
-
-void  alsaSoundcard::generateSquare(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave)
-{
-    (*outWave).reserve(duration*samplingfrequency*sizeof(double));
+    (wave->waveSamples).reserve(wave->waveDuration*wave->samplingFrequency*sizeof(double));
     int x=0;
     float i;
-    short int *allSamples = (short int *) malloc(duration*samplingfrequency*sizeof(short int));
-    float limit = 1.0/(float)(2*(float)frequency);
-    while(x < (samplingfrequency*duration))
+    float limit = 1.0/(float)(2*(float)wave->waveFrequency);
+    while(x < (wave->samplingFrequency*wave->waveDuration))
     {
-        for(i = 0;i < limit; i = i +(float) (1/(float)samplingfrequency))
+        for(i = 0;i < limit; i = i +(float) (1/(float)wave->samplingFrequency))
         {
 
-            (*outWave)[x]=(double)amplitude*(32767/5);
-            (allSamples)[x] = (short int)(*outWave)[x];
+            (wave->waveSamples)[x]=(double)wave->waveAmplitude*(32767/5);
             x++;
         }
-        for(i = 0 ; i < limit ; i = i + (1/(float)samplingfrequency))
+        for(i = 0 ; i < limit ; i = i + (1/(float)wave->samplingFrequency))
         {
 
-            (*outWave)[x]=(double)amplitude*(-32767/5);
-            (allSamples)[x] = (short int)(*outWave)[x];
+            (wave->waveSamples)[x]=(double)wave->waveAmplitude*(-32767/5);
             x++;
         }
     }
-    playBack(allSamples,duration,samplingfrequency);
+}
 
+void alsaSoundcard::playBack(outputWave *wave)
+{
+    short int *allSamples = (short int *) malloc(wave->waveDuration*wave->samplingFrequency*sizeof(short int));
+    for(int i=0 ;i < wave->waveDuration*wave->samplingFrequency ; i++)
+    {
+        allSamples[i] = (short int )wave->waveSamples[i];
+    }
+    int err;
+    err = snd_pcm_set_params(playback_handle,SND_PCM_FORMAT_S16,SND_PCM_ACCESS_RW_INTERLEAVED,1,wave->samplingFrequency,1,500000);
+    err = snd_pcm_writei(playback_handle,allSamples,wave->waveDuration*wave->samplingFrequency);
+    snd_pcm_close(playback_handle);
 
 }
 
-void alsaSoundcard::playBack(short int *allSamples,int duration,int samplingfrequency)
+outputWave::~outputWave()
 {
-    const char *device = "default";
-    snd_pcm_t *pcm;
-    int err;
-
-    err = snd_pcm_open(&pcm, device,SND_PCM_STREAM_PLAYBACK,0);
-    err = snd_pcm_set_params(pcm,SND_PCM_FORMAT_S16,SND_PCM_ACCESS_RW_INTERLEAVED,1,samplingfrequency,1,500000);
-    err = snd_pcm_writei(pcm,allSamples,duration*samplingfrequency);
-    snd_pcm_close(pcm);
 
 }

@@ -35,6 +35,7 @@
 
 //plot
 #include "qcustomplot.h"
+#include "alsasoundcard.h"
 
 namespace Ui {
 class MainWindow;
@@ -45,28 +46,19 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    outputWave *wave;
+    alsaSoundcard *allwaveObject;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void wave_plotted();
 private slots:
     void on_applypushButton_clicked();
+    void play_sound();
 
 private:
     Ui::MainWindow *ui;
-};
-
-
-class outputWave {
-public:
-    outputWave()
-    {
-    }
-    QVector<double> waveSamples;
-    int samplingFrequency;
-    int waveFrequency;
-    int waveDuration;
-    int waveAmplitude;
-    ~outputWave();
 };
 
 #endif // MAINWINDOW_H

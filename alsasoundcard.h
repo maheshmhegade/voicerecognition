@@ -36,19 +36,34 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <alsa/asoundlib.h>
+
 using namespace std;
+
+class outputWave {
+public:
+    outputWave()
+    {
+    }
+    QVector<double> waveSamples;
+    int samplingFrequency;
+    int waveFrequency;
+    int waveDuration;
+    int waveAmplitude;
+    ~outputWave();
+};
+
 class alsaSoundcard
 {
 public:
+    snd_pcm_t *playback_handle;
     alsaSoundcard();
     int initSoundcard();
-    void  generateSin(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  generateCos(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  generateTriangular(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  generateRamp(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  generateSinc(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  generateSquare(int frequency,int duration,float amplitude,int samplingfrequency,QVector<double> *outWave);
-    void  playBack(short int *allSamples,int duration,int samplingfrequency);
+    void  generateSin(outputWave *wave);
+    void  generateCos(outputWave *wave);
+    void  generateTriangular(outputWave *wave);
+    void  generateRamp(outputWave *wave);
+    void  generateSquare(outputWave *wave);
+    void  playBack(outputWave *wave);
 };
 
 #endif // ALSASOUNDCARD_H
