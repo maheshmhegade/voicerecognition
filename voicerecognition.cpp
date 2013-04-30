@@ -1,3 +1,33 @@
+/** ===========================================================
+ * @file
+ *
+ * This file is a part of pcro project
+ * <a href="https://github.com/maheshmhegade/pcro">https://github.com/maheshmhegade/pcro</a>
+ *
+ * @date    2010-04-01
+ * @brief   pcro using pc as signal generator.
+ * @section DESCRIPTION
+ *
+ * Using ALSA to output digital data as analogue sound which is standard a mathematical function.
+ *
+ * @author Copyright (C) 2012-2013 by Mahesh Hegde
+ *         <a href="mailto:maheshmhegade at gmail dot com">maheshmhegade at gmail dot com</a>
+ *
+ * @section LICENSE
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 #include "voicerecognition.h"
 
 namespace voicerecognition
@@ -11,6 +41,7 @@ Dictionary::Dictionary()
     const char * wavetriangular = "triangular";
     const char * waveRamp = "ramp";
     const char * waveNext = "next";
+    const char * waveCancel = "cancel";
     const char * waceZero = "zero";
     const char * waveOne = "one";
     const char * waveTwo = "two";
@@ -36,8 +67,10 @@ int Dictionary::recognizeWave(const char * inputString)
         return 3;
     else if(inputString == waveRamp)
         return 4;
-    else
+    else if (inputString == waveCancel)
         return 5;
+    else
+        return 6;
 }
 
 int Dictionary::recognizeNumber(const char* inputString)
@@ -62,15 +95,19 @@ int Dictionary::recognizeNumber(const char* inputString)
         return 8;
     else if (inputString == waveNine)
         return 9;
-    else return 10;
+    else if (inputString == waveCancel)
+        return 10;
+    else return 11;
 }
 
-bool Dictionary::recognizeNext(const char* inputString)
+int Dictionary::recognizeNext(const char* inputString)
 {
     if (inputString == waveNext)
-        return true;
+        return 0;
+    else if (inputString == waveCancel)
+        return 1;
     else
-        return false;
+        return 2;
 }
 
 bool Dictionary::recognizePlay(const char* inputString)
