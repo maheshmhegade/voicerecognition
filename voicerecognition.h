@@ -31,6 +31,9 @@
 #include <QString>
 #include <iostream>
 #include "stdio.h"
+
+#include <pocketsphinx/pocketsphinx.h>
+
 using namespace std;
 
 namespace voicerecognition

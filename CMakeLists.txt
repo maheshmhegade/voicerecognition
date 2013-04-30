@@ -1,8 +1,13 @@
 project(pcro)
 
 find_package(Qt4 4.6.0 REQUIRED)
+
 find_package(KDE4 REQUIRED)
 
+link_directories(/usr/local/lib)
+
+include_directories(/usr/include/sphinxbase)
+include_directories(/usr/local/include/pocketsphinx)
 set(pcro_SRS    alsasoundcard.cpp
                 main.cpp
                 mainwindow.cpp
@@ -29,4 +34,7 @@ target_link_libraries(pcro    ${KDE4_KDECORE_LIBS}
                               ${QT_QTCORE_LIBRARY}
                               ${QT_QTGUI_LIBRARY}
                               asound
+                              sphinxbase
+                              pocketsphinx
+                              sphinxad
                               )
