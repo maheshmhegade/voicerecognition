@@ -62,11 +62,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     static jmp_buf jbuf;
 
-    char * argv[] ={ "/home/mmh/mylm.lm" ,"/home/mmh/mydict.dic"  };
+    char * argv[] ={ "./pcro","-lm","/home/mmh/mylm.lm" ,"-dict","/home/mmh/mydict.dic"  };
 
     cout << argv[0] << endl;
 
-    int argc = 2;
+    int argc = 5;
 
     if (argc == 2)
     {
@@ -334,6 +334,7 @@ void MainWindow::recognize_from_microphone()
                 if(playSound)
                 {
                     trackIndex++;
+                    break;
                 }
                 else
                 {
