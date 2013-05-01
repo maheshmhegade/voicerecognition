@@ -57,17 +57,15 @@ Dictionary::Dictionary()
 
 int Dictionary::recognizeWave(char const *inputString)
 {
-    cout << inputString << endl;
-    cout << waveCos << endl;
-    if(inputString == waveSine)
+    if(strcmp(inputString,waveSine) == 0)
         return 0;
-    else if(inputString == waveCos)
+    else if(strcmp(inputString,waveCos) == 0)
         return 1;
-    else if(inputString == waveTriangular)
+    else if(strcmp(inputString,waveTriangular) == 0)
         return 2;
-    else if(inputString == waveRectangular)
+    else if(strcmp(inputString,waveRectangular) == 0)
         return 3;
-    else if(inputString == waveRamp)
+    else if(strcmp(inputString,waveRamp) == 0)
         return 4;
     else
         return 5;
@@ -75,36 +73,36 @@ int Dictionary::recognizeWave(char const *inputString)
 
 int Dictionary::recognizeNumber(char const* inputString)
 {
-    if (inputString == waveZero)
+    if (strcmp(inputString,waveZero) == 0)
         return 0;
-    else if (inputString == waveOne)
+    else if (strcmp(inputString,waveOne) == 0)
         return 1;
-    else if (inputString == waveTwo)
+    else if (strcmp(inputString,waveTwo) == 0)
         return 2;
-    else if (inputString == waveThree)
+    else if (strcmp(inputString,waveThree) == 0)
         return 3;
-    else if (inputString == waveFour)
+    else if (strcmp(inputString,waveFour) == 0)
         return 4;
-    else if(inputString == waveFive)
+    else if(strcmp(inputString,waveFive) == 0)
         return 5;
-    else if (inputString == waveSix)
+    else if (strcmp(inputString,waveSix) == 0)
         return 6;
-    else if (inputString == waveSeven)
+    else if (strcmp(inputString,waveSeven) == 0)
         return 7;
-    else if (inputString == waveEight)
+    else if (strcmp(inputString,waveEight) == 0)
         return 8;
-    else if (inputString == waveNine)
+    else if (strcmp(inputString,waveNine) == 0)
         return 9;
-    else if (inputString == waveCancel)
+    else if (strcmp(inputString,waveCancel) == 0)
         return 10;
     else return 11;
 }
 
 int Dictionary::recognizeNext(char const* inputString)
 {
-    if (inputString == waveNext)
+    if (strcmp(inputString,waveNext) == 0)
         return 0;
-    else if (inputString == waveCancel)
+    else if (strcmp(inputString,waveCancel) == 0)
         return 1;
     else
         return 2;
@@ -112,7 +110,7 @@ int Dictionary::recognizeNext(char const* inputString)
 
 bool Dictionary::recognizePlay(char const* inputString)
 {
-    if (inputString == wavePlay)
+    if (strcmp(inputString,wavePlay) == 0)
         return true;
     else
         return false;

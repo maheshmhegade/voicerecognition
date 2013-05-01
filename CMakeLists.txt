@@ -36,4 +36,5 @@ target_link_libraries(pcro    ${KDE4_KDECORE_LIBS}
                               asound
                               sphinxbase
                               pocketsphinx
+                              sphinxad
                               )

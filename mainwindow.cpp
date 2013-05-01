@@ -288,6 +288,7 @@ void MainWindow::recognize_from_microphone()
             if (trackIndex == 0)
             {
                 recognIndex = myDictionary->recognizeWave(word);
+                coout << recognIndex << endl;
                 if (recognIndex < 5)
                 {
                     waveType = recognIndex;
