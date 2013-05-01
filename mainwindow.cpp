@@ -200,6 +200,11 @@ void MainWindow::recognize_from_microphone()
     if (cont_ad_calib(cont) < 0)
         E_FATAL("Failed to calibrate voice activity detection\n");
 
+    bool playSound = false;
+    int trackIndex = 0;
+    int recognIndex = 16;
+    bool rocognNumber = false;
+
     for (;;)
     {
         /* Indicate listening for next utterance */
@@ -273,7 +278,7 @@ void MainWindow::recognize_from_microphone()
 
         fflush(stdout);
 
-        Dictionary *myDictionary = Dictionary();
+        Dictionary *myDictionary = new Dictionary();
 
         if (hyp)
         {
@@ -282,6 +287,7 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeWave(hyp);
                 if (recognIndex < 5)
                 {
+                    ui->wavecomboBox->setCurrentIndex(recognIndex);
                     trackIndex++;
                 }
             }
@@ -290,6 +296,7 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNumber(hyp);
                 if (recognIndex < 10)
                 {
+                    ui->frequencylineEdit->setText(QString(QString::number(recognIndex*100)));
                     trackIndex++;
                 }
             }
@@ -298,10 +305,20 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNumber(hyp);
                 if (recognIndex < 4)
                 {
+                    ui->voltagelineEdit->setText(QString(QString::number(recognIndex)));
                     trackIndex++;
                 }
             }
-            else if (trackIndex == 1 || trackIndex == 3 || trackIndex == 5)
+            else if (trackIndex == 6)
+            {
+                recognIndex = myDictionary->recognizeNumber(hyp);
+                if (recognIndex < 10)
+                {
+                    ui->durationlineEdit->setText(QString(QString::number(recognIndex)));
+                    trackIndex++;
+                }
+            }
+            else if (trackIndex == 1 || trackIndex == 3 || trackIndex == 5 )
             {
                 recognIndex = myDictionary->recognizeNext(hyp);
                 if (recognIndex == 0)
@@ -310,12 +327,20 @@ void MainWindow::recognize_from_microphone()
                 }
                 else if(recognIndex == 1)
                 {
-
+                    trackIndex--;
                 }
             }
             else
             {
                 playSound = myDictionary->recognizePlay(hyp);
+                if(playSound)
+                {
+                    trackIndex++;
+                }
+                else
+                {
+                    trackIndex--;
+                }
             }
 
         }

@@ -61,8 +61,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    static ps_decoder_t *ps;
-    static cmd_ln_t *config;
+    ps_decoder_t *ps;
+    cmd_ln_t *config;
     outputWave *wave;
     alsaSoundcard *allwaveObject;
     void sleep_msec(int32 ms);
