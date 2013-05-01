@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     static const arg_t cont_args_def[] =
     {
         POCKETSPHINX_OPTIONS,
-        /* Argument file. */
+        /* Argument file.*/
         { "-argfile",
           ARG_STRING,
           NULL,
@@ -200,11 +200,10 @@ void MainWindow::recognize_from_microphone()
 
     bool playSound = false;
     int trackIndex = 0;
-    int recognIndex = 16;
-    bool rocognNumber = false;
 
     for (;;)
     {
+        int recognIndex = 16;
         /* Indicate listening for next utterance */
         printf("READY....\n");
         fflush(stdout);
@@ -280,12 +279,14 @@ void MainWindow::recognize_from_microphone()
 
         if (hyp)
         {
+            cout << trackIndex << endl;
             if (trackIndex == 0)
             {
                 recognIndex = myDictionary->recognizeWave(hyp);
                 if (recognIndex < 5)
                 {
-                    ui->wavecomboBox->setCurrentIndex(recognIndex);
+                    waveType = recognIndex;
+                    cout << waveType << endl;
                     trackIndex++;
                 }
             }
@@ -294,7 +295,8 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNumber(hyp);
                 if (recognIndex < 10)
                 {
-                    ui->frequencylineEdit->setText(QString(QString::number(recognIndex*100)));
+                    waveFrequency = recognIndex*100;
+                    cout << waveFrequency << endl;
                     trackIndex++;
                 }
             }
@@ -303,7 +305,8 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNumber(hyp);
                 if (recognIndex < 4)
                 {
-                    ui->voltagelineEdit->setText(QString(QString::number(recognIndex)));
+                    waveVoltage = recognIndex ;
+                    cout << waveVoltage << endl;
                     trackIndex++;
                 }
             }
@@ -312,7 +315,8 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNumber(hyp);
                 if (recognIndex < 10)
                 {
-                    ui->durationlineEdit->setText(QString(QString::number(recognIndex)));
+                    waveDuration = recognIndex ;
+                    cout << waveDuration << endl;
                     trackIndex++;
                 }
             }
@@ -321,18 +325,21 @@ void MainWindow::recognize_from_microphone()
                 recognIndex = myDictionary->recognizeNext(hyp);
                 if (recognIndex == 0)
                 {
+                    cout << "next" << endl;
                     trackIndex++;
                 }
                 else if(recognIndex == 1)
                 {
+                    cout << "cancel" << endl;
                     trackIndex--;
                 }
             }
-            else
+            else if(trackIndex == 7)
             {
                 playSound = myDictionary->recognizePlay(hyp);
                 if(playSound)
                 {
+                    cout << "play" << endl;
                     trackIndex++;
                     break;
                 }
@@ -348,7 +355,11 @@ void MainWindow::recognize_from_microphone()
         if (ad_start_rec(ad) < 0)
             E_FATAL("Failed to start recording\n");
     }
-
+    ui->wavecomboBox->setCurrentIndex(waveType);
+    ui->voltagelineEdit->setText(QString(QString::number(waveVoltage)));
+    ui->frequencylineEdit->setText(QString(QString::number(waveFrequency)));
+    ui->durationlineEdit->setText(QString(QString::number(waveDuration)));
+    on_applypushButton_clicked();
     cont_ad_close(cont);
     ad_close(ad);
 }

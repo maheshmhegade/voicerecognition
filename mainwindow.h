@@ -61,6 +61,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    int waveVoltage,waveFrequency,waveDuration,waveType;
     ps_decoder_t *ps;
     cmd_ln_t *config;
     outputWave *wave;
