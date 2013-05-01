@@ -35,28 +35,30 @@ namespace voicerecognition
 
 Dictionary::Dictionary()
 {
-    const char * waveSine = "sine";
-    const char * waveCos = "cos";
-    const char * waveRectangular = "rectangular";
-    const char * wavetriangular = "triangular";
-    const char * waveRamp = "ramp";
-    const char * waveNext = "next";
-    const char * waveCancel = "cancel";
-    const char * waceZero = "zero";
-    const char * waveOne = "one";
-    const char * waveTwo = "two";
-    const char * waveThree = "three";
-    const char * waveFour = "four";
-    const char * waveFive = "five";
-    const char * waveSix = "six";
-    const char * waveSeven = "seven";
-    const char * waveEight = "eight";
-    const char * waveNine = "nine";
-    const char * wavePlay = "play";
+    waveSine = "sine";
+    waveCos = "cos";
+    waveRectangular = "rectangular";
+    waveTriangular = "triangular";
+    waveRamp = "ramp";
+    waveNext = "next";
+    waveCancel = "cancel";
+    waveZero = "zero";
+    waveOne = "one";
+    waveTwo = "two";
+    waveThree = "three";
+    waveFour = "four";
+    waveFive = "five";
+    waveSix = "six";
+    waveSeven = "seven";
+    waveEight = "eight";
+    waveNine = "nine";
+    wavePlay = "play";
 }
 
-int Dictionary::recognizeWave(const char *inputString)
+int Dictionary::recognizeWave(char const *inputString)
 {
+    cout << inputString << endl;
+    cout << waveCos << endl;
     if(inputString == waveSine)
         return 0;
     else if(inputString == waveCos)
@@ -71,7 +73,7 @@ int Dictionary::recognizeWave(const char *inputString)
         return 5;
 }
 
-int Dictionary::recognizeNumber(const char* inputString)
+int Dictionary::recognizeNumber(char const* inputString)
 {
     if (inputString == waveZero)
         return 0;
@@ -98,7 +100,7 @@ int Dictionary::recognizeNumber(const char* inputString)
     else return 11;
 }
 
-int Dictionary::recognizeNext(const char* inputString)
+int Dictionary::recognizeNext(char const* inputString)
 {
     if (inputString == waveNext)
         return 0;
@@ -108,7 +110,7 @@ int Dictionary::recognizeNext(const char* inputString)
         return 2;
 }
 
-bool Dictionary::recognizePlay(const char* inputString)
+bool Dictionary::recognizePlay(char const* inputString)
 {
     if (inputString == wavePlay)
         return true;

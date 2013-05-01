@@ -47,42 +47,42 @@ public:
     /**
      * @brief  Select typeof wave
      */
-    const char * waveSine;
-    const char * waveCos;
-    const char * waveRectangular;
-    const char * waveTriangular;
-    const char * waveRamp;
+    char const * waveSine;
+    char const * waveCos;
+    char const * waveRectangular;
+    char const * waveTriangular;
+    char const * waveRamp;
     /**
      * @brief  next ==>accept recognition
      *         cancel ==>reject previous recognition
      */
-    const char * waveNext;
-    const char * waveCancel;
+    char const * waveNext;
+    char const * waveCancel;
     /**
      * @brief  nubers :common to voltage and frequency
      */
-    const char * waveZero;
-    const char * waveOne;
-    const char * waveTwo;
-    const char * waveThree;
-    const char * waveFour;
-    const char * waveFive;
-    const char * waveSix;
-    const char * waveSeven;
-    const char * waveEight;
-    const char * waveNine;
+    char const * waveZero;
+    char const * waveOne;
+    char const * waveTwo;
+    char const * waveThree;
+    char const * waveFour;
+    char const * waveFive;
+    char const * waveSix;
+    char const * waveSeven;
+    char const * waveEight;
+    char const * waveNine;
     /**
      * @brief wavePlay::play sound
      */
-    const char * wavePlay;
+    char const * wavePlay;
 
     //methods for recognition decision
 public:
     Dictionary();
-    int recognizeWave(const char *);
-    int recognizeNumber(const char *);
-    int recognizeNext(const char *);
-    bool recognizePlay(const char *);
+    int recognizeWave(char const *);
+    int recognizeNumber(char const *);
+    int recognizeNext(char const *);
+    bool recognizePlay(char const *);
 
 };
 

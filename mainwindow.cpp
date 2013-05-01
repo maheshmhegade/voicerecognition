@@ -235,7 +235,8 @@ void MainWindow::recognize_from_microphone()
             /* Read non-silence audio data, if any, from continuous listening module */
             if ((k = cont_ad_read(cont, adbuf, 4096)) < 0)
                 E_FATAL("Failed to read audio\n");
-            if (k == 0) {
+            if (k == 0)
+            {
                 /*
                  * No speech data available; check current timestamp with most recent
                  * speech to see if more than 1 sec elapsed.  If so, end of utterance.
@@ -243,7 +244,8 @@ void MainWindow::recognize_from_microphone()
                 if ((cont->read_ts - ts) > DEFAULT_SAMPLES_PER_SEC)
                     break;
             }
-            else {
+            else
+            {
                 /* New speech data received; note current timestamp */
                 ts = cont->read_ts;
             }
@@ -276,13 +278,16 @@ void MainWindow::recognize_from_microphone()
         fflush(stdout);
 
         Dictionary *myDictionary = new Dictionary();
-
+        cout << hyp << "  helloooooo" << endl;
         if (hyp)
         {
+            char word[256];
+            sscanf(hyp, "%s", word);
+
             cout << trackIndex << endl;
             if (trackIndex == 0)
             {
-                recognIndex = myDictionary->recognizeWave(hyp);
+                recognIndex = myDictionary->recognizeWave(word);
                 if (recognIndex < 5)
                 {
                     waveType = recognIndex;
@@ -292,7 +297,7 @@ void MainWindow::recognize_from_microphone()
             }
             else if (trackIndex == 2)
             {
-                recognIndex = myDictionary->recognizeNumber(hyp);
+                recognIndex = myDictionary->recognizeNumber(word);
                 if (recognIndex < 10)
                 {
                     waveFrequency = recognIndex*100;
@@ -302,7 +307,7 @@ void MainWindow::recognize_from_microphone()
             }
             else if (trackIndex == 4)
             {
-                recognIndex = myDictionary->recognizeNumber(hyp);
+                recognIndex = myDictionary->recognizeNumber(word);
                 if (recognIndex < 4)
                 {
                     waveVoltage = recognIndex ;
@@ -312,7 +317,7 @@ void MainWindow::recognize_from_microphone()
             }
             else if (trackIndex == 6)
             {
-                recognIndex = myDictionary->recognizeNumber(hyp);
+                recognIndex = myDictionary->recognizeNumber(word);
                 if (recognIndex < 10)
                 {
                     waveDuration = recognIndex ;
@@ -322,7 +327,7 @@ void MainWindow::recognize_from_microphone()
             }
             else if (trackIndex == 1 || trackIndex == 3 || trackIndex == 5 )
             {
-                recognIndex = myDictionary->recognizeNext(hyp);
+                recognIndex = myDictionary->recognizeNext(word);
                 if (recognIndex == 0)
                 {
                     cout << "next" << endl;
@@ -336,7 +341,7 @@ void MainWindow::recognize_from_microphone()
             }
             else if(trackIndex == 7)
             {
-                playSound = myDictionary->recognizePlay(hyp);
+                playSound = myDictionary->recognizePlay(word);
                 if(playSound)
                 {
                     cout << "play" << endl;
