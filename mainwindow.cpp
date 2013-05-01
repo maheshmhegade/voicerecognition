@@ -62,17 +62,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     static jmp_buf jbuf;
 
-    longjmp(jbuf, 1);
+    char * argv[] ={ "/home/mmh/mylm.lm" ,"/home/mmh/mydict.dic"  };
 
-    char **argv;
+    cout << argv[0] << endl;
 
-    argv[0] = "mylm.lm";
-    argv[1] = "mydict.dic";
     int argc = 2;
 
     if (argc == 2)
     {
-        config = cmd_ln_parse_file_r(NULL, cont_args_def,argv[1] , TRUE);
+        config = cmd_ln_parse_file_r(NULL, cont_args_def, argv[1], TRUE);
     }
     else
     {
