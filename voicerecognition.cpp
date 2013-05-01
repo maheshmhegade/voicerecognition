@@ -55,7 +55,7 @@ Dictionary::Dictionary()
     const char * wavePlay = "play";
 }
 
-int Dictionary::recognizeWave(char inputString)
+int Dictionary::recognizeWave(const char *inputString)
 {
     if(inputString == waveSine)
         return 0;
@@ -71,7 +71,7 @@ int Dictionary::recognizeWave(char inputString)
         return 5;
 }
 
-int Dictionary::recognizeNumber(char inputString)
+int Dictionary::recognizeNumber(const char* inputString)
 {
     if (inputString == waveZero)
         return 0;

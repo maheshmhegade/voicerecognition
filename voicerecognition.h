@@ -79,8 +79,8 @@ public:
     //methods for recognition decision
 public:
     Dictionary();
-    int recognizeWave(char);
-    int recognizeNumber(char);
+    int recognizeWave(const char *);
+    int recognizeNumber(const char *);
     int recognizeNext(const char *);
     bool recognizePlay(const char *);
 
