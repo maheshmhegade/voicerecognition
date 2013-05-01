@@ -45,7 +45,7 @@ int alsaSoundcard::initSoundcard()
     snd_pcm_hw_params_t *hw_params;
     unsigned int rate = 8000;        // adjust to vary sampling rate
     int numChannels = 1;    // adjust for mono or stereo
-    audio_device = "default";
+    audio_device = "plughw:0,0";
 
     if ((err = snd_pcm_open (&playback_handle, audio_device, SND_PCM_STREAM_PLAYBACK, 0)) < 0) {
         fprintf (stderr, "cannot open audio device %s (%s)\n", audio_device, snd_strerror (err));
