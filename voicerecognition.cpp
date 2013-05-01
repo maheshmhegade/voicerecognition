@@ -67,10 +67,8 @@ int Dictionary::recognizeWave(char inputString)
         return 3;
     else if(inputString == waveRamp)
         return 4;
-    else if (inputString == waveCancel)
-        return 5;
     else
-        return 6;
+        return 5;
 }
 
 int Dictionary::recognizeNumber(char inputString)

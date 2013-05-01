@@ -37,6 +37,21 @@
 #include "qcustomplot.h"
 #include "alsasoundcard.h"
 
+#include <stdio.h>
+#include <string.h>
+
+#include <sys/types.h>
+#include <sys/time.h>
+
+#include <sphinxbase/err.h>
+#include <sphinxbase/ad.h>
+#include <sphinxbase/cont_ad.h>
+
+#include "pocketsphinx.h"
+#include "voicerecognition.h"
+
+using namespace voicerecognition;
+
 namespace Ui {
 class MainWindow;
 }
@@ -46,8 +61,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    static ps_decoder_t *ps;
+    static cmd_ln_t *config;
     outputWave *wave;
     alsaSoundcard *allwaveObject;
+    void sleep_msec(int32 ms);
+    void recognize_from_microphone();
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
