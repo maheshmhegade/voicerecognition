@@ -36,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    wave = new outputWave();
+    allwaveObject = new alsaSoundcard(); //= alsaSoundcard();
+    connect(this,SIGNAL(wave_plotted()),this,SLOT(play_sound()));
 
     static const arg_t cont_args_def[] =
     {
@@ -62,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     static jmp_buf jbuf;
 
-    char * argv[] ={ "./pcro","-lm","/home/mmh/mylm.lm" ,"-dict","/home/mmh/mydict.dic"  };
+    char * argv[] ={ "./pcro","-lm","/home/alok/mylm.lm" ,"-dict","/home/alok/mydict.dic"  };
 
     cout << argv[0] << endl;
 
@@ -91,11 +94,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ps_free(ps);
     return;
-
-    wave = new outputWave();
-    allwaveObject = new alsaSoundcard(); //= alsaSoundcard();
-    connect(this,SIGNAL(wave_plotted()),this,SLOT(play_sound()));
-
 }
 
 MainWindow::~MainWindow()
@@ -288,7 +286,7 @@ void MainWindow::recognize_from_microphone()
             if (trackIndex == 0)
             {
                 recognIndex = myDictionary->recognizeWave(word);
-                coout << recognIndex << endl;
+                cout << recognIndex << endl;
                 if (recognIndex < 5)
                 {
                     waveType = recognIndex;
