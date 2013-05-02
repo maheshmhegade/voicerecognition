@@ -276,7 +276,7 @@ void MainWindow::recognize_from_microphone()
         fflush(stdout);
 
         Dictionary *myDictionary = new Dictionary();
-        cout << hyp << "  helloooooo" << endl;
+        cout << hyp << endl;
         if (hyp)
         {
             char word[256];
