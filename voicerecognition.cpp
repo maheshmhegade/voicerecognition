@@ -108,12 +108,14 @@ int Dictionary::recognizeNext(char const* inputString)
         return 2;
 }
 
-bool Dictionary::recognizePlay(char const* inputString)
+int Dictionary::recognizePlay(char const* inputString)
 {
     if (strcmp(inputString,"play") == 0)
-        return true;
+        return 0;
+    else if (strcmp(inputString,"cancel") == 0)
+        return 1;
     else
-        return false;
+        return 2;
 }
 
 }//namespace voicerecognition

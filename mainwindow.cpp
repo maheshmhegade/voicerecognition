@@ -199,6 +199,11 @@ void MainWindow::recognize_from_microphone()
     bool playSound = false;
     int trackIndex = 0;
 
+    waveType = -1;
+    waveFrequency = 0;
+    waveVoltage = 0;
+    waveDuration = 0;
+
     for (;;)
     {
         int recognIndex = 16;
@@ -291,64 +296,110 @@ void MainWindow::recognize_from_microphone()
                 {
                     waveType = recognIndex;
                     cout << waveType << endl;
-                    trackIndex++;
+                }
+                else
+                {
+                    if(waveType >= 0)
+                    {
+                        recognIndex = myDictionary->recognizeNext(word);
+                        if (recognIndex == 0)
+                        {
+                            cout << "next" << endl;
+                            trackIndex = trackIndex++;
+                        }
+                    }
+                }
+            }
+            else if (trackIndex == 1)
+            {
+                recognIndex = myDictionary->recognizeNumber(word);
+                if (recognIndex < 10)
+                {
+                    waveFrequency = (waveFrequency*10) + recognIndex;
+                    cout << "wavefrequency=" << waveFrequency << endl;
+                }
+                else
+                {
+                    if (waveFrequency > 0)
+                    {
+                        recognIndex = myDictionary->recognizeNext(word);
+                        if (recognIndex == 0)
+                        {
+                            cout << "next" << endl;
+                            trackIndex++;
+                        }
+                        else if(recognIndex == 1)
+                        {
+                            cout << "cancel" << endl;
+                            waveFrequency = (int) (waveFrequency/10);
+                        }
+                    }
                 }
             }
             else if (trackIndex == 2)
             {
                 recognIndex = myDictionary->recognizeNumber(word);
-                if (recognIndex < 10)
-                {
-                    waveFrequency = recognIndex*100;
-                    cout << waveFrequency << endl;
-                    trackIndex++;
-                }
-            }
-            else if (trackIndex == 4)
-            {
-                recognIndex = myDictionary->recognizeNumber(word);
                 if (recognIndex < 4)
                 {
-                    waveVoltage = recognIndex ;
-                    cout << waveVoltage << endl;
-                    trackIndex++;
-                }
-            }
-            else if (trackIndex == 6)
-            {
-                recognIndex = myDictionary->recognizeNumber(word);
-                if (recognIndex < 10)
-                {
-                    waveDuration = recognIndex ;
-                    cout << waveDuration << endl;
-                    trackIndex++;
-                }
-            }
-            else if (trackIndex == 1 || trackIndex == 3 || trackIndex == 5 )
-            {
-                recognIndex = myDictionary->recognizeNext(word);
-                if (recognIndex == 0)
-                {
-                    cout << "next" << endl;
-                    trackIndex++;
-                }
-                else if(recognIndex == 1)
-                {
-                    cout << "cancel" << endl;
-                    trackIndex--;
-                }
-            }
-            else if(trackIndex == 7)
-            {
-                playSound = myDictionary->recognizePlay(word);
-                if(playSound)
-                {
-                    cout << "play" << endl;
-                    trackIndex++;
-                    break;
+                    waveVoltage = (waveVoltage*10) +recognIndex;
+                    cout << "wavevoltge=" << waveVoltage << endl;
                 }
                 else
                 {
+                    if (waveVoltage > 0)
+                    {
+                        recognIndex = myDictionary->recognizeNext(word);
+                        if (recognIndex == 0)
+                        {
+                            cout << "next" << endl;
+                            trackIndex++;
+                        }
+                        else if(recognIndex == 1)
+                        {
+                            cout << "cancel" << endl;
+                            waveVoltage = (int) (waveVoltage/10);
+                        }
+                    }
+                }
+            }
+            else if (trackIndex == 3)
+            {
+                recognIndex = myDictionary->recognizeNumber(word);
+                if (recognIndex < 10)
+                {
+                    waveDuration = (waveDuration*10) + recognIndex ;
+                    cout << "waveDuration=" << waveDuration << endl;
+                }
+                else
+                {
+                    if (waveDuration > 0)
+                    {
+                        recognIndex = myDictionary->recognizeNext(word);
+                        if (recognIndex == 0)
+                        {
+                            cout << "next" << endl;
+                            trackIndex++;
+                        }
+                        else if(recognIndex == 1)
+                        {
+                            cout << "cancel" << endl;
+                            waveDuration = (int) (waveDuration/10);
+                        }
+                    }
+                }
+            }
+            else if(trackIndex == 4)
+            {
+                playSound = myDictionary->recognizePlay(word);
+                if(playSound == 0)
+                {
+                    cout << "play" << endl;
+                    break;
+                }
+                else if(playSound == 1)
+                {
+                    cout << "waveduration=" << waveDuration << endl;
+                    waveDuration = 0;
                     trackIndex--;
                 }
             }

@@ -82,7 +82,7 @@ public:
     int recognizeWave(char const *);
     int recognizeNumber(char const *);
     int recognizeNext(char const *);
-    bool recognizePlay(char const *);
+    int recognizePlay(char const *);
 
 };
 
