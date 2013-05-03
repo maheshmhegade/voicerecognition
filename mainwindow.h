@@ -40,14 +40,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <sys/types.h>
-#include <sys/time.h>
-
-#include <sphinxbase/err.h>
-#include <sphinxbase/ad.h>
-#include <sphinxbase/cont_ad.h>
-
-#include "pocketsphinx.h"
 #include "voicerecognition.h"
 
 using namespace voicerecognition;
@@ -61,20 +53,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    int waveVoltage,waveFrequency,waveDuration,waveType;
-    ps_decoder_t *ps;
-    cmd_ln_t *config;
+    explicit MainWindow(QWidget *parent = 0);
+    void setWaveValues(VoiceRecognition *voiceRecognizer);
+    void generateWave();
     outputWave *wave;
     alsaSoundcard *allwaveObject;
-    void sleep_msec(int32 ms);
-    void recognize_from_microphone();
-    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 signals:
     void wave_plotted();
 private slots:
     void on_applypushButton_clicked();
+public slots:
     void play_sound();
 
 private:

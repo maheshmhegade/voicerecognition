@@ -32,7 +32,14 @@
 #include <iostream>
 #include "stdio.h"
 
-#include <pocketsphinx/pocketsphinx.h>
+#include <sys/types.h>
+#include <sys/time.h>
+
+#include <sphinxbase/err.h>
+#include <sphinxbase/ad.h>
+#include <sphinxbase/cont_ad.h>
+
+#include "pocketsphinx.h"
 
 using namespace std;
 
@@ -84,6 +91,21 @@ public:
     int recognizeNext(char const *);
     int recognizePlay(char const *);
 
+};
+
+class VoiceRecognition
+{
+public:
+    VoiceRecognition();
+
+    int waveVoltage,waveFrequency,waveDuration,waveType;
+    ps_decoder_t *ps;
+    cmd_ln_t *config;
+    void sleep_msec(int32 ms);
+    void startVoiceRecognition();
+    void recognize_from_microphone();
+
+    ~VoiceRecognition();
 };
 
 }//namespace voicerecognition

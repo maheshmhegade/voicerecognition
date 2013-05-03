@@ -37,5 +37,12 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    VoiceRecognition *voiceRecognizer = new VoiceRecognition();
+    voiceRecognizer->startVoiceRecognition();
+    w.setWaveValues(voiceRecognizer);
+    delete voiceRecognizer;
+    w.generateWave();
+    w.play_sound();
+
     return a.exec();
 }
