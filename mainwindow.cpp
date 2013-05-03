@@ -339,7 +339,7 @@ void MainWindow::recognize_from_microphone()
             else if (trackIndex == 2)
             {
                 recognIndex = myDictionary->recognizeNumber(word);
-                if (recognIndex < 4)
+                if (recognIndex <= 4)
                 {
                     waveVoltage = (waveVoltage*10) +recognIndex;
                     cout << "wavevoltge=" << waveVoltage << endl;
