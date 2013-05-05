@@ -396,6 +396,8 @@ void VoiceRecognition::recognize_from_microphone()
             else if(trackIndex == 4)
             {
                 playSound = myDictionary->recognizePlay(word);
+
+                //TODO:replace "play" with "okay" in dictionary,then make playSound == 0 in below.
                 if(playSound != 0)
                 {
                     cout << "play" << endl;

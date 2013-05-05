@@ -53,6 +53,9 @@ MainWindow::~MainWindow()
 void MainWindow::on_applypushButton_clicked()
 {
     generateWave();
+
+    //run plotting and playing tasks in seperate threads to display waveform quickly
+    //TODO:find a way to stop playing sound,whenever needed.
     QtConcurrent::run(this,&MainWindow::play_sound);
     QtConcurrent::run(this,&MainWindow::plotWave);
 }
@@ -91,6 +94,8 @@ void MainWindow::setWaveValues(VoiceRecognition *voiceRecognizer)
     ui->voltagelineEdit->setText(QString(QString::number(voiceRecognizer->waveVoltage)));
     ui->frequencylineEdit->setText(QString(QString::number(voiceRecognizer->waveFrequency)));
     ui->durationlineEdit->setText(QString(QString::number(voiceRecognizer->waveDuration)));
+
+    //transfer handle to plotAndPlay()
     emit plotAndPlayNow();
 }
 
@@ -154,6 +159,8 @@ void MainWindow::generateWave()
 void MainWindow::plotAndPlay()
 {
     generateWave();
+
+    //execute plotting and playing sound in seperate threads
     QtConcurrent::run(this,&MainWindow::play_sound);
     QtConcurrent::run(this,&MainWindow::plotWave);
 }
@@ -162,5 +169,7 @@ void MainWindow::recognizeVoice()
 {
     VoiceRecognition *recognizer = new VoiceRecognition();
     recognizer->startVoiceRecognition();
+
+    //tranfser handle to setWaveValues()
     emit allValuesSet(recognizer);
 }
