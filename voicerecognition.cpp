@@ -150,7 +150,7 @@ void VoiceRecognition::startVoiceRecognition()
 
     static jmp_buf jbuf;
 
-    char * argv[] ={ "./pcro","-lm","/home/mmh/mylm.lm" ,"-dict","/home/mmh/mydict.dic"  };
+    char * argv[] ={ "./pcro","-lm","/home/alok/mylm.lm" ,"-dict","/home/alok/mydict.dic"  };
 
     cout << argv[0] << endl;
 
@@ -178,7 +178,6 @@ void VoiceRecognition::startVoiceRecognition()
     }
 
     ps_free(ps);
-    return;
 }
 
 void VoiceRecognition::recognize_from_microphone()
@@ -397,7 +396,7 @@ void VoiceRecognition::recognize_from_microphone()
             else if(trackIndex == 4)
             {
                 playSound = myDictionary->recognizePlay(word);
-                if(playSound == 0)
+                if(playSound != 0)
                 {
                     cout << "play" << endl;
                     break;

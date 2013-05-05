@@ -95,6 +95,7 @@ public:
 
 class VoiceRecognition
 {
+
 public:
     VoiceRecognition();
 
@@ -104,8 +105,8 @@ public:
     void sleep_msec(int32 ms);
     void startVoiceRecognition();
     void recognize_from_microphone();
-
     ~VoiceRecognition();
+
 };
 
 }//namespace voicerecognition

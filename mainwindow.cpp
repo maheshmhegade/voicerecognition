@@ -29,7 +29,6 @@
  * ============================================================ */
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,8 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     wave = new outputWave();
-    allwaveObject = new alsaSoundcard(); //= alsaSoundcard();
-    connect(this,SIGNAL(wave_plotted()),this,SLOT(play_sound()));
+
+    QtConcurrent::run(this,&MainWindow::recognizeVoice);
+
+    connect(this,SIGNAL(allValuesSet(VoiceRecognition *)),this,SLOT(setWaveValues(VoiceRecognition *)));
+    connect(this,SIGNAL(plotAndPlayNow()),this,SLOT(plotAndPlay()));
 }
 
 MainWindow::~MainWindow()
@@ -50,39 +52,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_applypushButton_clicked()
 {
+    generateWave();
+    QtConcurrent::run(this,&MainWindow::play_sound);
+    QtConcurrent::run(this,&MainWindow::plotWave);
+}
 
-    wave->samplingFrequency = 44100;
-    wave->waveDuration = ui->durationlineEdit->text().toInt();
-    wave->waveFrequency = ui->frequencylineEdit->text().toInt();
-    wave->waveAmplitude = ui->voltagelineEdit->text().toFloat();
-    switch (ui->wavecomboBox->currentIndex())
-    {
-    case 0:
-    {
-        allwaveObject->generateSin(wave);
-        break;
-    }
-    case 1:
-    {
-        allwaveObject->generateCos(wave);
-        break;
-    }
-    case 2:
-    {
-        allwaveObject->generateTriangular(wave);
-        break;
-    }
-    case 3:
-    {
-        allwaveObject->generateSquare(wave);
-        break;
-    }
-    case 4:
-    {
-        allwaveObject->generateRamp(wave);
-        break;
-    }
-    }
+void MainWindow::plotWave()
+{
     QVector<double> x(5000), y(5000);
     ui->widget->addGraph();
     // create graph and assign data to it:
@@ -101,13 +77,11 @@ void MainWindow::on_applypushButton_clicked()
     ui->widget->addGraph();
     ui->widget->graph(0)->setData(x,y);
     ui->widget->replot();
-
-    cout << "one" << endl;
-    return;
 }
 
 void MainWindow::play_sound()
 {
+    allwaveObject = new alsaSoundcard(); //= alsaSoundcard();
     allwaveObject->playBack(wave);
 }
 
@@ -117,6 +91,7 @@ void MainWindow::setWaveValues(VoiceRecognition *voiceRecognizer)
     ui->voltagelineEdit->setText(QString(QString::number(voiceRecognizer->waveVoltage)));
     ui->frequencylineEdit->setText(QString(QString::number(voiceRecognizer->waveFrequency)));
     ui->durationlineEdit->setText(QString(QString::number(voiceRecognizer->waveDuration)));
+    emit plotAndPlayNow();
 }
 
 void MainWindow::generateWave()
@@ -174,4 +149,18 @@ void MainWindow::generateWave()
 
     cout << "one" << endl;
     return;
+}
+
+void MainWindow::plotAndPlay()
+{
+    generateWave();
+    QtConcurrent::run(this,&MainWindow::play_sound);
+    QtConcurrent::run(this,&MainWindow::plotWave);
+}
+
+void MainWindow::recognizeVoice()
+{
+    VoiceRecognition *recognizer = new VoiceRecognition();
+    recognizer->startVoiceRecognition();
+    emit allValuesSet(recognizer);
 }

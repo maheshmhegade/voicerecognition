@@ -32,7 +32,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QtConcurrentRun>
+#include <boost/bind.hpp>
 //plot
 #include "qcustomplot.h"
 #include "alsasoundcard.h"
@@ -41,6 +42,7 @@
 #include <string.h>
 
 #include "voicerecognition.h"
+#include "ui_mainwindow.h"
 
 using namespace voicerecognition;
 
@@ -54,18 +56,24 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void setWaveValues(VoiceRecognition *voiceRecognizer);
     void generateWave();
+    void plotWave();
+    void recognizeVoice();
     outputWave *wave;
     alsaSoundcard *allwaveObject;
     ~MainWindow();
 
 signals:
+    void allValuesSet(VoiceRecognition *);
     void wave_plotted();
+    void plotAndPlayNow();
 private slots:
     void on_applypushButton_clicked();
+    void plotAndPlay();
+
 public slots:
     void play_sound();
+    void setWaveValues(VoiceRecognition *);
 
 private:
     Ui::MainWindow *ui;
