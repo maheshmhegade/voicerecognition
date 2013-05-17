@@ -1,4 +1,4 @@
-Language model created by QuickLM on Wed May  1 10:51:37 EDT 2013
+Language model created by QuickLM on Tue May 14 13:13:24 EDT 2013
 Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
 
 The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
@@ -22,10 +22,10 @@ ngram 3=18
 -2.0334 eight -0.2218
 -2.0334 five -0.2218
 -2.0334 four -0.2218
+-2.0334 generate -0.2218
 -2.0334 next -0.2218
 -2.0334 nine -0.2218
 -2.0334 one -0.2218
--2.0334 play -0.2218
 -2.0334 ramp -0.2218
 -2.0334 rectangular -0.2218
 -2.0334 seven -0.2218
@@ -42,10 +42,10 @@ ngram 3=18
 -1.5563 <s> eight 0.0000
 -1.5563 <s> five 0.0000
 -1.5563 <s> four 0.0000
+-1.5563 <s> generate 0.0000
 -1.5563 <s> next 0.0000
 -1.5563 <s> nine 0.0000
 -1.5563 <s> one 0.0000
--1.5563 <s> play 0.0000
 -1.5563 <s> ramp 0.0000
 -1.5563 <s> rectangular 0.0000
 -1.5563 <s> seven 0.0000
@@ -60,10 +60,10 @@ ngram 3=18
 -0.3010 eight </s> -0.3010
 -0.3010 five </s> -0.3010
 -0.3010 four </s> -0.3010
+-0.3010 generate </s> -0.3010
 -0.3010 next </s> -0.3010
 -0.3010 nine </s> -0.3010
 -0.3010 one </s> -0.3010
--0.3010 play </s> -0.3010
 -0.3010 ramp </s> -0.3010
 -0.3010 rectangular </s> -0.3010
 -0.3010 seven </s> -0.3010
@@ -80,10 +80,10 @@ ngram 3=18
 -0.3010 <s> eight </s>
 -0.3010 <s> five </s>
 -0.3010 <s> four </s>
+-0.3010 <s> generate </s>
 -0.3010 <s> next </s>
 -0.3010 <s> nine </s>
 -0.3010 <s> one </s>
--0.3010 <s> play </s>
 -0.3010 <s> ramp </s>
 -0.3010 <s> rectangular </s>
 -0.3010 <s> seven </s>
