@@ -29,6 +29,7 @@
  * ============================================================ */
 
 #include "voicerecognition.h"
+#include <kstandarddirs.h>
 
 namespace voicerecognition
 {
@@ -150,7 +151,14 @@ void VoiceRecognition::startVoiceRecognition()
 
     static jmp_buf jbuf;
 
-    char * argv[] ={ "./pcro","-lm","/home/alok/mylm.lm" ,"-dict","/home/alok/mydict.dic"  };
+    char languageModel[100];
+    strcpy(languageModel, (KStandardDirs::locateLocal("data", "voicerecognition/mylm.lm", true)).toStdString().c_str());
+
+    char myDictionary[100];
+    strcpy(myDictionary,(KStandardDirs::locateLocal("data", "voicerecognition/mydict.dic", true)).toStdString().c_str());
+
+    cout << ".................." << languageModel << endl << myDictionary << endl <<"...............";
+    char * argv[] ={ "./pcro","-lm",languageModel,"-dict",myDictionary};
 
     cout << argv[0] << endl;
 

@@ -38,3 +38,6 @@ target_link_libraries(pcro    ${KDE4_KDECORE_LIBS}
                               pocketsphinx
                               sphinxad
                               )
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mylm.lm
+              ${CMAKE_CURRENT_SOURCE_DIR}/mydict.dic
+        DESTINATION ~/.kde4/share/apps/voicerecognition/)
