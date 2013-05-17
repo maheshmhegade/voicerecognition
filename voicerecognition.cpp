@@ -52,7 +52,7 @@ Dictionary::Dictionary()
     waveSeven = "seven";
     waveEight = "eight";
     waveNine = "nine";
-    wavePlay = "play";
+    wavePlay = "generate";
 }
 
 int Dictionary::recognizeWave(char const *inputString)
