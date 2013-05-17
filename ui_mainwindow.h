@@ -1,7 +1,10 @@
+#include <kdialog.h>
+#include <klocale.h>
+
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed May 1 01:08:50 2013
+** Created: Wed May 15 16:48:41 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +18,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QComboBox>
+#include <QtGui/QFormLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -22,8 +26,6 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QSplitter>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
@@ -36,27 +38,21 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_4;
-    QSplitter *splitter;
-    QCustomPlot *widget;
-    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_3;
-    QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
+    QVBoxLayout *verticalLayout_2;
+    QCustomPlot *widget;
+    QVBoxLayout *verticalLayout;
+    QFormLayout *formLayout;
     QLabel *label;
     QLineEdit *durationlineEdit;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label_2;
-    QComboBox *wavecomboBox;
-    QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_3;
     QLabel *frequencylabel;
     QLineEdit *frequencylineEdit;
-    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_2;
+    QComboBox *wavecomboBox;
     QLabel *voltagelabel;
     QLineEdit *voltagelineEdit;
     QPushButton *applypushButton;
-    QSpacerItem *verticalSpacer;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -65,117 +61,97 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(908, 553);
+        MainWindow->resize(908, 612);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        verticalLayout_4 = new QVBoxLayout(centralWidget);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        splitter = new QSplitter(centralWidget);
-        splitter->setObjectName(QString::fromUtf8("splitter"));
-        splitter->setOrientation(Qt::Horizontal);
-        widget = new QCustomPlot(splitter);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setMinimumSize(QSize(500, 500));
-        widget->setMaximumSize(QSize(900, 900));
-        splitter->addWidget(widget);
-        layoutWidget = new QWidget(splitter);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        verticalLayout_3 = new QVBoxLayout(layoutWidget);
+        verticalLayout_3 = new QVBoxLayout(centralWidget);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        verticalLayout_2->setSizeConstraint(QLayout::SetFixedSize);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(layoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        widget = new QCustomPlot(centralWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy);
+        widget->setMinimumSize(QSize(0, 0));
 
-        horizontalLayout->addWidget(label);
-
-        durationlineEdit = new QLineEdit(layoutWidget);
-        durationlineEdit->setObjectName(QString::fromUtf8("durationlineEdit"));
-
-        horizontalLayout->addWidget(durationlineEdit);
-
-
-        verticalLayout_2->addLayout(horizontalLayout);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_2 = new QLabel(layoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        horizontalLayout_2->addWidget(label_2);
-
-        wavecomboBox = new QComboBox(layoutWidget);
-        wavecomboBox->setObjectName(QString::fromUtf8("wavecomboBox"));
-
-        horizontalLayout_2->addWidget(wavecomboBox);
+        verticalLayout_2->addWidget(widget);
 
 
-        verticalLayout_2->addLayout(horizontalLayout_2);
+        horizontalLayout->addLayout(verticalLayout_2);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        frequencylabel = new QLabel(layoutWidget);
+        verticalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
+        verticalLayout->setContentsMargins(0, -1, -1, -1);
+        formLayout = new QFormLayout();
+        formLayout->setSpacing(6);
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setSizeConstraint(QLayout::SetMinimumSize);
+        formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label);
+
+        durationlineEdit = new QLineEdit(centralWidget);
+        durationlineEdit->setObjectName(QString::fromUtf8("durationlineEdit"));
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, durationlineEdit);
+
+        frequencylabel = new QLabel(centralWidget);
         frequencylabel->setObjectName(QString::fromUtf8("frequencylabel"));
 
-        horizontalLayout_3->addWidget(frequencylabel);
+        formLayout->setWidget(1, QFormLayout::LabelRole, frequencylabel);
 
-        frequencylineEdit = new QLineEdit(layoutWidget);
+        frequencylineEdit = new QLineEdit(centralWidget);
         frequencylineEdit->setObjectName(QString::fromUtf8("frequencylineEdit"));
 
-        horizontalLayout_3->addWidget(frequencylineEdit);
+        formLayout->setWidget(1, QFormLayout::FieldRole, frequencylineEdit);
 
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        formLayout->setWidget(2, QFormLayout::LabelRole, label_2);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        voltagelabel = new QLabel(layoutWidget);
+        wavecomboBox = new QComboBox(centralWidget);
+        wavecomboBox->setObjectName(QString::fromUtf8("wavecomboBox"));
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, wavecomboBox);
+
+        voltagelabel = new QLabel(centralWidget);
         voltagelabel->setObjectName(QString::fromUtf8("voltagelabel"));
 
-        horizontalLayout_4->addWidget(voltagelabel);
+        formLayout->setWidget(3, QFormLayout::LabelRole, voltagelabel);
 
-        voltagelineEdit = new QLineEdit(layoutWidget);
+        voltagelineEdit = new QLineEdit(centralWidget);
         voltagelineEdit->setObjectName(QString::fromUtf8("voltagelineEdit"));
 
-        horizontalLayout_4->addWidget(voltagelineEdit);
+        formLayout->setWidget(3, QFormLayout::FieldRole, voltagelineEdit);
 
-
-        verticalLayout->addLayout(horizontalLayout_4);
-
-        applypushButton = new QPushButton(layoutWidget);
+        applypushButton = new QPushButton(centralWidget);
         applypushButton->setObjectName(QString::fromUtf8("applypushButton"));
 
-        verticalLayout->addWidget(applypushButton);
+        formLayout->setWidget(4, QFormLayout::LabelRole, applypushButton);
 
 
-        verticalLayout_2->addLayout(verticalLayout);
+        verticalLayout->addLayout(formLayout);
 
 
-        verticalLayout_3->addLayout(verticalLayout_2);
+        horizontalLayout->addLayout(verticalLayout);
 
-        verticalSpacer = new QSpacerItem(118, 248, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        horizontalLayout->setStretch(0, 1);
 
-        verticalLayout_3->addItem(verticalSpacer);
-
-        splitter->addWidget(layoutWidget);
-
-        verticalLayout_4->addWidget(splitter);
+        verticalLayout_3->addLayout(horizontalLayout);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -196,20 +172,20 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "Duration", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("MainWindow", "waveform", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(tr2i18n("MainWindow", 0));
+        label->setText(tr2i18n("Duration", 0));
+        frequencylabel->setText(tr2i18n("Frequency", 0));
+        label_2->setText(tr2i18n("waveform", 0));
         wavecomboBox->clear();
         wavecomboBox->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Sin", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "Cos", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "Triangular", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "Square", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "Ramp", 0, QApplication::UnicodeUTF8)
+         << tr2i18n("Sin", 0)
+         << tr2i18n("Cos", 0)
+         << tr2i18n("Triangular", 0)
+         << tr2i18n("Square", 0)
+         << tr2i18n("Ramp", 0)
         );
-        frequencylabel->setText(QApplication::translate("MainWindow", "Frequency", 0, QApplication::UnicodeUTF8));
-        voltagelabel->setText(QApplication::translate("MainWindow", "Voltage", 0, QApplication::UnicodeUTF8));
-        applypushButton->setText(QApplication::translate("MainWindow", "Apply", 0, QApplication::UnicodeUTF8));
+        voltagelabel->setText(tr2i18n("Voltage", 0));
+        applypushButton->setText(tr2i18n("Apply", 0));
     } // retranslateUi
 
 };
@@ -220,4 +196,5 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // MAINWINDOW_H
+
